@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Akkowww 🌍</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* ---------- INTRO PAGE ---------- */
+    #intro {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #111, #000);
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    #intro span {
+      animation: glowText 2s infinite alternate;
+      text-shadow: 0 0 15px #ff33cc, 0 0 30px #ff33cc, 0 0 60px #ff33cc;
+    }
+
+    #startBtn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #ff33cc, #33ccff);
+      color: white;
+      box-shadow: 0 0 15px #ff33cc;
+      transition: transform 0.2s;
+    }
+    #startBtn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes glowText {
+      from { color: #ff33cc; text-shadow: 0 0 15px #ff33cc, 0 0 30px #ff33cc; }
+      to { color: #33ccff; text-shadow: 0 0 20px #33ccff, 0 0 40px #33ccff; }
+    }
+
+    /* ---------- MAIN SCENE ---------- */
+    #main {
+      display: none;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scene {
+      width: 600px;
+      height: 600px;
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: rotate 20s linear infinite;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 180px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+      border: 3px solid #fff;
+    }
+
+    /* Center Text */
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: #00eaff;
+      text-align: center;
+      z-index: 10;
+      animation: glow 2s infinite alternate, float 3s ease-in-out infinite;
+      text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 40px #00eaff, 0 0 80px #00eaff;
+    }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff; color: #00eaff; }
+      to { text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff; color: #ff66ff; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-15px); }
+    }
+
+    /* ---------- CONFETTI ---------- */
+    .confetti {
+      position: fixed;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      animation: fall linear forwards;
+      opacity: 0.8;
+      z-index: 20;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Intro Page -->
+  <div id="intro">
+    <span>💖 Welcome Talkative Tangiii ♾️</span>
+    <button id="startBtn">Click Here 🎉</button>
+  </div>
+
+  <!-- Main Page -->
+  <div id="main">
+    <!-- Song -->
+    <audio id="song" loop>
+      <source src="birthday-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="scene">
+      <div class="center-text">🎉 Happy Birthday 🎂<br>Akkowww 🌍</div>
+      <div class="carousel">
+        <img src="photo1.jpg" style="transform: rotateY(0deg) translateZ(400px);">
+        <img src="photo2.jpg" style="transform: rotateY(45deg) translateZ(400px);">
+        <img src="photo3.jpg" style="transform: rotateY(90deg) translateZ(400px);">
+        <img src="photo4.jpg" style="transform: rotateY(135deg) translateZ(400px);">
+        <img src="photo5.jpg" style="transform: rotateY(180deg) translateZ(400px);">
+        <img src="photo6.jpg" style="transform: rotateY(225deg) translateZ(400px);">
+        <img src="photo7.jpg" style="transform: rotateY(270deg) translateZ(400px);">
+        <img src="photo8.jpg" style="transform: rotateY(315deg) translateZ(400px);">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const intro = document.getElementById("intro");
+    const main = document.getElementById("main");
+    const song = document.getElementById("song");
+
+    startBtn.addEventListener("click", () => {
+      intro.style.display = "none";
+      main.style.display = "flex";
+      song.play();
+
+      // Start confetti
+      setInterval(createConfetti, 150);
+    });
+
+    // Generate falling confetti
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      document.body.appendChild(confetti);
+
+      const size = Math.random() * 8 + 5;
+      confetti.style.width = `${size}px`;
+      confetti.style.height = `${size}px`;
+
+      const colors = ["#ff0", "#0f0", "#0ff", "#f0f", "#f00", "#00f"];
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+      setTimeout(() => { confetti.remove(); }, 6000);
+    }
+  </script>
+</body>
+</html>
