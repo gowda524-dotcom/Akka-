@@ -6,260 +6,185 @@
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #000;
+      background: black;
       overflow: hidden;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
-    /* ---------- INTRO PAGE ---------- */
+    /* Intro Page */
     #intro {
-      position: absolute;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      background: radial-gradient(circle, #ff66cc, #6600ff);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ff33cc, #33ccff, #ff9933);
-      background-size: 400% 400%;
-      animation: gradientShift 8s ease infinite;
-      font-size: 2.5rem;
-      font-weight: bold;
-      z-index: 100;
-      text-align: center;
+      color: white;
+      z-index: 10;
     }
-    #intro span {
-      animation: glowText 2s infinite alternate;
-      text-shadow: 0 0 25px #fff, 0 0 50px #ff33cc, 0 0 100px #33ccff;
+    #intro h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
     }
     #startBtn {
-      margin-top: 20px;
-      padding: 15px 35px;
-      font-size: 1.5rem;
-      font-weight: bold;
+      padding: 12px 25px;
+      font-size: 1.2rem;
       border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      background: linear-gradient(45deg, #ff33cc, #33ccff, #00ff99);
+      border-radius: 30px;
+      background: linear-gradient(90deg, #ff33cc, #33ccff);
       color: white;
-      box-shadow: 0 0 20px #ff33cc, 0 0 40px #33ccff;
-      animation: pulse 1.5s infinite;
+      cursor: pointer;
+      box-shadow: 0 0 20px white;
+      transition: transform 0.2s;
     }
     #startBtn:hover { transform: scale(1.1); }
 
-    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
-    @keyframes glowText { from{color:#fff;} to{color:#ff0;} }
-    @keyframes gradientShift {
-      0%{background-position:0% 50%;}
-      50%{background-position:100% 50%;}
-      100%{background-position:0% 50%;}
-    }
-
-    /* ---------- MAIN PAGE ---------- */
-    #main {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .scene {
-      width: 600px;
-      height: 400px;
-      perspective: 1500px;
-      position: relative;
-    }
-
-    .carousel {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      transform-style: preserve-3d;
-      animation: rotate 25s linear infinite;
-    }
-
-    .carousel img {
-      position: absolute;
-      width: 180px;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.7);
-      border: 3px solid #fff;
-    }
-
+    /* Top and Bottom Text */
     .top-text, .bottom-text {
-      font-size: 2.2rem;
-      font-weight: bold;
+      position: absolute;
+      width: 100%;
       text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
       background: linear-gradient(90deg, #ff33cc, #33ccff, #ffff33);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: glow 2s infinite alternate;
       text-shadow: 0 0 25px #fff, 0 0 50px #ff33cc, 0 0 100px #33ccff;
     }
-    .top-text { margin-bottom: 20px; }
-    .bottom-text { margin-top: 20px; }
+    .top-text { top: 20px; }
+    .bottom-text { bottom: 20px; }
 
-    @keyframes rotate { from{transform:rotateY(0deg);} to{transform:rotateY(360deg);} }
-    @keyframes glow {
-      from { text-shadow:0 0 20px #ff33cc,0 0 40px #33ccff; }
-      to   { text-shadow:0 0 40px #ffff33,0 0 80px #ff00ff; }
+    /* Carousel */
+    .scene {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+    }
+    .carousel {
+      width: 300px;
+      height: 400px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate 25s infinite linear;
+    }
+    .carousel img {
+      position: absolute;
+      width: 250px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #fff;
     }
 
-    /* ---------- CONFETTI ---------- */
+    /* Confetti */
     .confetti {
       position: fixed;
-      top: 0;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      animation: fall linear forwards;
-      opacity: 0.9;
-      z-index: 20;
-    }
-    @keyframes fall {
-      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+      width: 8px;
+      height: 8px;
+      top: -10px;
+      animation: fall 5s linear forwards;
     }
 
-    /* ---------- BALLOONS ---------- */
+    /* Balloons */
     .balloon {
       position: absolute;
-      bottom: -150px;
+      bottom: -100px;
       width: 40px;
-      height: 60px;
+      height: 55px;
       border-radius: 50%;
       opacity: 0.8;
       animation: rise 8s linear forwards;
-      z-index: 15;
     }
     .balloon::after {
       content: "";
       position: absolute;
-      top: 60px;
+      top: 55px;
       left: 50%;
       width: 2px;
       height: 40px;
       background: white;
+      transform: translateX(-50%);
+    }
+
+    /* Animations */
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
     }
     @keyframes rise {
       to { transform: translateY(-120vh); opacity: 0; }
     }
-
-    /* ---------- FIREWORKS ---------- */
-    .firework {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: yellow;
-      opacity: 0.9;
-      animation: explode 1.2s ease-out forwards;
-    }
-    @keyframes explode {
-      0% { transform: scale(0); opacity: 1; }
-      100% { transform: scale(3); opacity: 0; }
-    }
-
-    /* ---------- FLOATING NAME ---------- */
-    .floating-name {
-      position: absolute;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 0 10px #ff33cc, 0 0 20px #33ccff, 0 0 40px #ffff33;
-      opacity: 0.8;
-      animation: floatName 10s linear forwards;
-      pointer-events: none;
-      z-index: 30;
-    }
-    @keyframes floatName {
-      0% { transform: translateY(0) scale(0.8); opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff33cc; }
+      to { text-shadow: 0 0 20px #33ccff, 0 0 40px #ffff33; }
     }
   </style>
 </head>
 <body>
+
   <!-- Intro Page -->
   <div id="intro">
-    <span>💖 Welcome Talkative Tangiii ♾️</span>
-    <button id="startBtn">Click Here 🎉</button>
+    <h1>💖♾️ Welcome Talkative Tangiii 💖♾️</h1>
+    <button id="startBtn">Click to Start 🎶</button>
   </div>
 
-  <!-- Main Page -->
-  <div id="main">
-    <!-- Song -->
-    <audio id="song" loop>
-      <source src="birthday-song.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Song -->
+  <audio id="song" loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
 
-    <div class="top-text">🎉 Happy Birthday 🎂 Akkowww 🌍</div>
+  <!-- Top and Bottom Text -->
+  <div class="top-text">🎉 Happy Birthday 🎂 Akkowww 🌍</div>
+  <div class="bottom-text">✨ Once Again, Happy Birthday Akkowww 🌍 ✨</div>
 
-    <div class="scene">
-      <div class="carousel">
-        <img src="photo1.jpg" style="transform: rotateY(0deg) translateZ(400px);">
-        <img src="photo2.jpg" style="transform: rotateY(45deg) translateZ(400px);">
-        <img src="photo3.jpg" style="transform: rotateY(90deg) translateZ(400px);">
-        <img src="photo4.jpg" style="transform: rotateY(135deg) translateZ(400px);">
-        <img src="photo5.jpg" style="transform: rotateY(180deg) translateZ(400px);">
-        <img src="photo6.jpg" style="transform: rotateY(225deg) translateZ(400px);">
-        <img src="photo7.jpg" style="transform: rotateY(270deg) translateZ(400px);">
-        <img src="photo8.jpg" style="transform: rotateY(315deg) translateZ(400px);">
-      </div>
+  <!-- Rotating Carousel -->
+  <div class="scene">
+    <div class="carousel">
+      <img src="photo1.jpg" style="transform: rotateY(0deg) translateZ(400px);">
+      <img src="photo2.jpg" style="transform: rotateY(45deg) translateZ(400px);">
+      <img src="photo3.jpg" style="transform: rotateY(90deg) translateZ(400px);">
+      <img src="photo4.jpg" style="transform: rotateY(135deg) translateZ(400px);">
+      <img src="photo5.jpg" style="transform: rotateY(180deg) translateZ(400px);">
+      <img src="photo6.jpg" style="transform: rotateY(225deg) translateZ(400px);">
+      <img src="photo7.jpg" style="transform: rotateY(270deg) translateZ(400px);">
+      <img src="photo8.jpg" style="transform: rotateY(315deg) translateZ(400px);">
     </div>
-
-    <div class="bottom-text">✨ Once Again, Happy Birthday Akkowww 🌍 ✨</div>
   </div>
 
   <script>
-    const startBtn = document.getElementById("startBtn");
-    const intro = document.getElementById("intro");
-    const main = document.getElementById("main");
-    const song = document.getElementById("song");
-
-    startBtn.addEventListener("click", () => {
-      intro.style.display = "none";
-      main.style.display = "flex";
-
-      // Play music after button click (mobile-safe)
-      song.play().catch(err => console.log("Autoplay blocked:", err));
-
-      // Start effects
-      setInterval(createConfetti, 120);
-      setInterval(createBalloon, 2000);
-      setInterval(createFirework, 3000);
-      setInterval(createFloatingName, 2500);
+    // Start button → hide intro + play song + start effects
+    document.getElementById("startBtn").addEventListener("click", function() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("song").play();
+      setInterval(createConfetti, 200);
+      setInterval(createBalloon, 2500);
     });
 
-    /* ---------- CONFETTI ---------- */
+    // Confetti generator
     function createConfetti() {
       const confetti = document.createElement("div");
       confetti.classList.add("confetti");
       document.body.appendChild(confetti);
-
-      const size = Math.random() * 10 + 6;
-      confetti.style.width = `${size}px`;
-      confetti.style.height = `${size}px`;
-
-      const colors = ["#ff0", "#0f0", "#0ff", "#f0f", "#f00", "#00f", "#ff6600"];
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-      confetti.style.left = Math.random() * window.innerWidth + "px";
-      confetti.style.animationDuration = (Math.random() * 3 + 3) + "s";
-
-      setTimeout(() => confetti.remove(), 6000);
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor =
+        "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+      confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      setTimeout(() => confetti.remove(), 5000);
     }
 
-    /* ---------- BALLOONS ---------- */
+    // Balloon generator
     function createBalloon() {
       const balloon = document.createElement("div");
       balloon.classList.add("balloon");
@@ -267,55 +192,9 @@
 
       const colors = ["red", "blue", "green", "yellow", "pink", "purple", "orange"];
       balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      balloon.style.left = Math.random() * window.innerWidth + "px";
+      balloon.style.left = Math.random() * 100 + "vw";
 
       setTimeout(() => balloon.remove(), 9000);
-    }
-
-    /* ---------- FIREWORKS ---------- */
-    function createFirework() {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight / 2; // upper half screen
-
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("firework");
-        document.body.appendChild(particle);
-
-        const colors = ["red", "yellow", "blue", "lime", "cyan", "magenta", "orange"];
-        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-        particle.style.left = x + "px";
-        particle.style.top = y + "px";
-
-        const angle = Math.random() * 2 * Math.PI;
-        const distance = Math.random() * 100 + 50;
-        const dx = Math.cos(angle) * distance;
-        const dy = Math.sin(angle) * distance;
-
-        particle.animate(
-          [
-            { transform: "translate(0,0)", opacity: 1 },
-            { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }
-          ],
-          { duration: 1200, easing: "ease-out", fill: "forwards" }
-        );
-
-        setTimeout(() => particle.remove(), 1500);
-      }
-    }
-
-    /* ---------- FLOATING NAMES ---------- */
-    function createFloatingName() {
-      const name = document.createElement("div");
-      name.classList.add("floating-name");
-      name.textContent = "Akkowww 🌍";
-      document.body.appendChild(name);
-
-      name.style.left = Math.random() * window.innerWidth + "px";
-      name.style.top = window.innerHeight + "px"; // start from bottom
-
-      setTimeout(() => name.remove(), 10000);
     }
   </script>
 </body>
