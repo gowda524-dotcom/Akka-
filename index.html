@@ -13,7 +13,6 @@
       background: #000;
       overflow: hidden;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      color: white;
     }
 
     /* ---------- INTRO PAGE ---------- */
@@ -31,13 +30,12 @@
       font-size: 2.5rem;
       font-weight: bold;
       z-index: 100;
+      text-align: center;
     }
-
     #intro span {
       animation: glowText 2s infinite alternate;
       text-shadow: 0 0 25px #fff, 0 0 50px #ff33cc, 0 0 100px #33ccff;
     }
-
     #startBtn {
       margin-top: 20px;
       padding: 15px 35px;
@@ -53,31 +51,22 @@
     }
     #startBtn:hover { transform: scale(1.1); }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes glowText {
-      from { color: #fff; }
-      to { color: #ff0; }
-    }
-
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+    @keyframes glowText { from{color:#fff;} to{color:#ff0;} }
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
 
-    /* ---------- MAIN SCENE ---------- */
+    /* ---------- MAIN PAGE ---------- */
     #main {
       display: none;
-      width: 100%;
-      height: 100%;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 100%;
+      height: 100%;
       position: relative;
     }
 
@@ -104,7 +93,7 @@
       border-radius: 15px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.7);
       border: 3px solid #fff;
-      animation: float 6s ease-in-out infinite, bounceZoom 3s ease-in-out infinite;
+      animation: float 6s ease-in-out infinite;
     }
 
     /* Birthday Texts */
@@ -118,28 +107,17 @@
       animation: glow 2s infinite alternate;
       text-shadow: 0 0 25px #fff, 0 0 50px #ff33cc, 0 0 100px #33ccff;
     }
-
     .top-text { margin-bottom: 20px; }
     .bottom-text { margin-top: 20px; }
 
-    @keyframes rotate {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-
+    @keyframes rotate { from{transform:rotateY(0deg);} to{transform:rotateY(360deg);} }
     @keyframes glow {
-      from { text-shadow: 0 0 20px #ff33cc, 0 0 40px #33ccff; }
-      to { text-shadow: 0 0 40px #ffff33, 0 0 80px #ff00ff; }
+      from { text-shadow:0 0 20px #ff33cc,0 0 40px #33ccff; }
+      to   { text-shadow:0 0 40px #ffff33,0 0 80px #ff00ff; }
     }
-
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
-    }
-
-    @keyframes bounceZoom {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
     }
 
     /* ---------- CONFETTI ---------- */
@@ -155,10 +133,7 @@
       z-index: 20;
     }
     @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-      }
+      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
     /* ---------- BALLOONS ---------- */
@@ -167,8 +142,7 @@
       bottom: -100px;
       width: 40px;
       height: 55px;
-      background: red;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
       animation: rise 10s linear forwards;
     }
     .balloon::after {
@@ -182,8 +156,8 @@
       transform: translateX(-50%);
     }
     @keyframes rise {
-      0% { transform: translateY(0) rotate(0); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+      0%{transform:translateY(0) rotate(0);opacity:1;}
+      100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}
     }
 
     /* ---------- FIREWORKS ---------- */
@@ -196,8 +170,8 @@
       animation: explode 1s ease-out forwards;
     }
     @keyframes explode {
-      0% { transform: translate(0,0) scale(1); opacity: 1; }
-      100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
+      0%{transform:translate(0,0) scale(1);opacity:1;}
+      100%{transform:translate(var(--x),var(--y)) scale(0.5);opacity:0;}
     }
   </style>
 </head>
@@ -211,11 +185,11 @@
   <!-- Main Page -->
   <div id="main">
     <!-- Song -->
-    <audio id="song" loop>
+    <audio id="song" autoplay loop>
       <source src="birthday-song.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Text above -->
+    <!-- Top Text -->
     <div class="top-text">🎉 Happy Birthday 🎂 Akkowww 🌍</div>
 
     <div class="scene">
@@ -231,7 +205,7 @@
       </div>
     </div>
 
-    <!-- Text below -->
+    <!-- Bottom Text -->
     <div class="bottom-text">✨ Once Again, Happy Birthday Akkowww 🌍 ✨</div>
   </div>
 
@@ -244,15 +218,11 @@
     startBtn.addEventListener("click", () => {
       intro.style.display = "none";
       main.style.display = "flex";
-      song.play().catch(err => console.log("Song blocked:", err));
 
-      // Confetti
+      song.play().catch(err => console.log("Autoplay blocked:", err));
+
       setInterval(createConfetti, 120);
-
-      // Balloons
       setInterval(createBalloon, 2000);
-
-      // Fireworks
       setInterval(createFirework, 4000);
     });
 
@@ -261,21 +231,16 @@
       const confetti = document.createElement("div");
       confetti.classList.add("confetti");
       document.body.appendChild(confetti);
-
       const size = Math.random() * 10 + 6;
       confetti.style.width = `${size}px`;
       confetti.style.height = `${size}px`;
-
-      const shapes = ["50%", "0%", "20%"];
-      confetti.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
-
-      const colors = ["#ff0", "#0f0", "#0ff", "#f0f", "#f00", "#00f", "#ff6600"];
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-      confetti.style.left = Math.random() * window.innerWidth + "px";
-      confetti.style.animationDuration = (Math.random() * 3 + 3) + "s";
-
-      setTimeout(() => { confetti.remove(); }, 6000);
+      const shapes = ["50%","0%","20%"];
+      confetti.style.borderRadius = shapes[Math.floor(Math.random()*shapes.length)];
+      const colors = ["#ff0","#0f0","#0ff","#f0f","#f00","#00f","#ff6600"];
+      confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      confetti.style.left = Math.random()*window.innerWidth + "px";
+      confetti.style.animationDuration = (Math.random()*3+3)+"s";
+      setTimeout(()=>confetti.remove(),6000);
     }
 
     // Balloons
@@ -283,37 +248,30 @@
       const balloon = document.createElement("div");
       balloon.classList.add("balloon");
       document.body.appendChild(balloon);
-
-      const colors = ["#ff6666", "#66ff66", "#66ccff", "#ffcc66", "#cc66ff"];
-      balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
-      balloon.style.left = Math.random() * window.innerWidth + "px";
-      balloon.style.animationDuration = (Math.random() * 6 + 6) + "s";
-
-      setTimeout(() => { balloon.remove(); }, 12000);
+      const colors = ["#ff6666","#66ff66","#66ccff","#ffcc66","#cc66ff"];
+      balloon.style.background = colors[Math.floor(Math.random()*colors.length)];
+      balloon.style.left = Math.random()*window.innerWidth+"px";
+      balloon.style.animationDuration = (Math.random()*6+6)+"s";
+      setTimeout(()=>balloon.remove(),12000);
     }
 
     // Fireworks
     function createFirework() {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight / 2;
-
-      for (let i = 0; i < 25; i++) {
-        const particle = document.createElement("div");
+      const x = Math.random()*window.innerWidth;
+      const y = Math.random()*window.innerHeight/2;
+      for(let i=0;i<25;i++){
+        const particle=document.createElement("div");
         particle.classList.add("particle");
         document.body.appendChild(particle);
-
-        const angle = (i / 25) * 2 * Math.PI;
-        const radius = Math.random() * 120 + 50;
-        particle.style.setProperty("--x", `${Math.cos(angle) * radius}px`);
-        particle.style.setProperty("--y", `${Math.sin(angle) * radius}px`);
-
-        const colors = ["#ff0", "#0f0", "#0ff", "#f0f", "#f00", "#00f"];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-        particle.style.left = `${x}px`;
-        particle.style.top = `${y}px`;
-
-        setTimeout(() => { particle.remove(); }, 1000);
+        const angle=(i/25)*2*Math.PI;
+        const radius=Math.random()*120+50;
+        particle.style.setProperty("--x",`${Math.cos(angle)*radius}px`);
+        particle.style.setProperty("--y",`${Math.sin(angle)*radius}px`);
+        const colors=["#ff0","#0f0","#0ff","#f0f","#f00","#00f"];
+        particle.style.background=colors[Math.floor(Math.random()*colors.length)];
+        particle.style.left=`${x}px`;
+        particle.style.top=`${y}px`;
+        setTimeout(()=>particle.remove(),1000);
       }
     }
   </script>
